@@ -1,12 +1,65 @@
-# Predicting Severe Injury in Pedestrian and Cyclist Crashes and the Role of Vehicle Type
+# ML-Project-crash-predict
 
-## Overview
-This project uses the NHTSA Crash Report Sampling System (CRSS) dataset (2016–2023) to train supervised machine learning models (Random Forest, XGBoost) that predict whether a pedestrian or cyclist hit by a vehicle will sustain severe or fatal injuries.
+Predicting pedestrian and cyclist crash severity using US CRSS (Crash Report Sampling System) data.
 
-## Key Objectives
-- **Prediction:** Classify crash severity (Binary: Severe/Fatal vs. Non-Severe) using pre-injury crash parameters.
-- **Temporal Validation:** Train on 2016–2021, validate on 2022, and evaluate on unseen 2023 crash data.
-- **Feature Impact:** Utilize SHAP values and "what-if" counterfactual analysis to evaluate how vehicle type (cars vs. SUVs/trucks) affects predicted injury severity.
+## 🚀 Getting Started for Team Members (Google Colab Setup)
 
-## Tech Stack
-`Python` | `pandas` | `scikit-learn` | `XGBoost` | `SHAP`
+Follow these steps to set up the environment, download/upload raw data, preprocess, and run training models.
+
+### 1. Open in Google Colab
+Simply copy and paste this notebook's link or upload the project notebook directly into [Google Colab](https://colab.research.google.com/).
+
+### 2. Clone the Repository
+Run the following command in a cell to clone your branch and navigate inside the project folder:
+```python
+!git clone https://github.com/rexfordkode/ML-Project-crash-predict.git
+%cd ML-Project-crash-predict
+```
+
+### 3. Setting Up Git Credentials (To Push Changes)
+Before making commits, configure your Git username and email:
+```python
+!git config --global user.name "Your GitHub Username"
+!git config --global user.email "your_email@example.com"
+```
+
+### 4. Uploading & Extracting Data
+1. Place your `data.zip` file directly into `/content/ML-Project-crash-predict/data/raw/`.
+2. Extract it using:
+```python
+import zipfile
+import os
+
+os.makedirs('data/raw', exist_ok=True)
+with zipfile.ZipFile('data/raw/data.zip', 'r') as zip_ref:
+    zip_ref.extractall('data/raw')
+```
+
+### 5. Running Preprocessing
+Execute the modular preprocessing script to ingest the raw CSVs and generate the cleaned master dataset:
+```python
+!python src/preprocess.py
+```
+This generates a clean dataset ready for training at `data/processed/clean_ped_cyc_crashes.csv`.
+
+## 📂 Folder Structure
+```
+├── data/
+│   ├── raw/           # Raw crash CSVs & data.zip (Git ignored)
+│   └── processed/     # Cleaned model-ready dataset (Committed to Git)
+├── src/
+│   ├── __init__.py    # Empty package identifier
+│   ├── ingest.py      # Raw dataset ingestion rules
+│   ├── preprocess.py  # Data cleaning, filtering and feature engineering
+│   ├── train.py       # Model training scripts
+│   └── evaluate.py    # Model evaluation metrics
+└── README.md
+```
+
+## ⚙️ Development & Pull Requests
+* Make sure you checkout to your custom feature branch before committing:
+  `!git checkout -b feat/your-feature-name`
+* Stage and commit your script updates, leaving out heavy files (raw CSVs and `.zip` are automatically ignored by our `.gitignore`): 
+  `!git add src/ .gitignore README.md`
+  `!git commit -m "Describe your updates"`
+  `!git push origin feat/your-feature-name`
