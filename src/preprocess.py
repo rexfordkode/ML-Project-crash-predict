@@ -71,5 +71,8 @@ def clean_crss_data(raw_dir='data/raw', processed_dir='data/processed'):
     else:
         print("No data was processed successfully.")
 
+    print("\nYearly breakdown in master dataset:")
+    print(master_df['YEAR'].value_counts().sort_index())        
+
 if __name__ == "__main__":
     clean_crss_data()
